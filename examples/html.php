@@ -27,7 +27,7 @@ try {
 		$devtools->page()->navigate($ctx, NavigateRequest::builder()->setUrl("https://www.google.com/")->build());
 		$devtools->page()->awaitLoadEventFired($ctx);
         $data = $devtools->page()->printToPDF($ctx, PrintToPDFRequest::fromJson((object) [
-            'displayHeaderFooter' => false
+            'displayHeaderFooter' => true
         ]))->data;
         file_put_contents(__DIR__ . '/test.pdf', base64_decode($data));
 	} finally {
