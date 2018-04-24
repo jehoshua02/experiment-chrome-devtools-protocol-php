@@ -23,16 +23,27 @@ try {
 
 	$devtools = $tab->devtools();
 	try {
+        // instantiate devtools
         $devtools->page()->enable($ctx);
-        $frameId = $devtools->page()->getFrameTree($ctx)->frameTree->frame->id;
+
+        // build custom html
+        $html = '<!DOCTYPE html><html><head></head><body><h1>Hello World</h1></body></html>';
+
+        // set document content, requires a frame id (that was fun to figure out)
         $devtools->page()->setDocumentContent($ctx, SetDocumentContentRequest::fromJson((object) [
-            'frameId' => $frameId,
-            'html' => '<!DOCTYPE html><html><head></head><body><h1>Hello World</h1></body></html>'
+            'frameId' => $devtools->page()->getFrameTree($ctx)->frameTree->frame->id,
+            'html' => $html
         ]));
-		$devtools->page()->awaitLoadEventFired($ctx);
+
+        // wait for page to load (necessary?)
+        $devtools->page()->awaitLoadEventFired($ctx);
+
+        // get pdf content
         $data = $devtools->page()->printToPDF($ctx, PrintToPDFRequest::fromJson((object) [
             'displayHeaderFooter' => false
         ]))->data;
+
+        // save pdf content
         file_put_contents(__DIR__ . '/../test.pdf', base64_decode($data));
 	} finally {
 		// devtools client needs to be closed
