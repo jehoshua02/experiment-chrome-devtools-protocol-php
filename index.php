@@ -26,7 +26,9 @@ try {
 		$devtools->page()->enable($ctx);
 		$devtools->page()->navigate($ctx, NavigateRequest::builder()->setUrl("https://www.google.com/")->build());
 		$devtools->page()->awaitLoadEventFired($ctx);
-        $data = $devtools->page()->printToPDF($ctx, PrintToPDFRequest::make())->data;
+        $data = $devtools->page()->printToPDF($ctx, PrintToPDFRequest::fromJson((object) [
+            'displayHeaderFooter' => false
+        ]))->data;
         file_put_contents(__DIR__ . '/test.pdf', base64_decode($data));
 	} finally {
 		// devtools client needs to be closed
