@@ -1,0 +1,12 @@
+{
+    "name": "joshstoutenburg/experiment-chrome-devtools-protocol-php",
+    "authors": [
+        {
+            "name": "Josh Stoutenburg",
+            "email": "jehoshua02@gmail.com"
+        }
+    ],
+    "require": {
+        "jakubkulhan/chrome-devtools-protocol": "^1.0"
+    }
+}
