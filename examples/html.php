@@ -27,7 +27,7 @@ try {
         $devtools->page()->enable($ctx);
 
         // build custom html
-        $html = '<!DOCTYPE html><html><head></head><body><h1>Hello World</h1></body></html>';
+        $html = '<!DOCTYPE html><html><head></head><body><h1>Hello World</h1>' . str_repeat('<div>Just a div</div>', 100) . '</body></html>';
 
         // set document content, requires a frame id (that was fun to figure out)
         $devtools->page()->setDocumentContent($ctx, SetDocumentContentRequest::fromJson((object) [
